@@ -8,6 +8,41 @@ namespace heladeria.backend
 {
     public class proveedores_back
     {
+        public static String codigoUpdate = "";
+        public static VO.proveedor updateProveedor(String data)
+        {
+            VO.proveedor proveedorOb = new VO.proveedor();
+            using (SqlConnection con = conexion.obtenerConexion())
+            {
+                String sql = "select * from proveedor,categoria_proveedores where proveedor.nit = '{0}'  and proveedor.codigo=categoria_proveedores.codigo";
+                Console.WriteLine(data);
+
+                SqlCommand comando = new SqlCommand(string.Format(sql, data), con);
+
+
+                SqlDataReader reader = comando.ExecuteReader();
+                if (reader.Read())
+                {
+
+                    proveedorOb.Nit = reader.GetString(0);
+                    proveedorOb.Nombre = reader.GetString(1);
+                    proveedorOb.Telefono = reader.GetDecimal(2);
+                    proveedorOb.Celular = reader.GetDecimal(3);
+                    proveedorOb.Descripcion = reader.GetString(4);
+                    proveedorOb.Fax = reader.GetDecimal(5);
+                    proveedorOb.Direccion = reader.GetString(6);
+                    proveedorOb.Correo = reader.GetString(7);
+                    proveedorOb.Codigo = reader.GetString(10);
+                    codigoUpdate = reader.GetString(9);
+
+
+                }
+                con.Close();
+
+
+            }
+            return proveedorOb;
+        }
         public static int agregarProveedor(backend.VO.proveedor objetProveedor, String com1)
         {
 
@@ -16,7 +51,8 @@ namespace heladeria.backend
             String sql = "";
             if (com1.Equals("yes"))
             {
-                sql = "update usuario set usuario='{0}',clave= '{1}',descripcion= '{2}', id_permiso='{3}' where usuario='{4}' ";
+                sql = "update proveedor set nit='{0}',nombre= '{1}',telefono= {2}, celular={3}, descripcion='{4}', fax={5}, direccion='{6}', correo='{7}', codigo='{8}' where nit='{0}' ";
+                objetProveedor.Codigo = codigoUpdate;
             }
             else
             {
@@ -103,10 +139,10 @@ namespace heladeria.backend
                     VO.proveedor proveedor = new VO.proveedor();
                     proveedor.Nit = (String)reader.GetValue(0);
                     proveedor.Nombre = (String)reader.GetValue(1);
-                    proveedor.Telefono = (int)reader.GetValue(2);
+                    proveedor.Telefono = (decimal)reader.GetValue(2);
                     proveedor.Celular = (decimal)reader.GetValue(3);
                     proveedor.Descripcion = (String)reader.GetValue(4);
-                    proveedor.Fax= (int)reader.GetValue(5);
+                    proveedor.Fax= (decimal)reader.GetValue(5);
                     proveedor.Direccion = (String)reader.GetValue(6);
                     proveedor.Correo = (String)reader.GetValue(7);
                     proveedor.Codigo = (String)reader.GetValue(10);

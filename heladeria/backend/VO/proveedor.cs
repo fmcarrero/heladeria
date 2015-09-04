@@ -4,15 +4,17 @@ using System;
  using System.Text; 
  namespace heladeria.backend.VO{ 
  
-	 public class proveedor{ 
-	 	 public decimal Celular {get;set;}
+	 public class proveedor{
+        public String Nit { get; set; }
+        public String Nombre { get; set; }
+        public String Descripcion { get; set; }
+        public String Direccion { get; set; }
+        public decimal Celular {get;set;}
 	 	 public String Codigo {get;set;}
 	 	 public String Correo {get;set;}
-	 	 public String Descripcion {get;set;}
-	 	 public String Direccion {get;set;}
+	 	
 	 	 public decimal Fax {get;set;}
-	 	 public String Nit {get;set;}
-	 	 public String Nombre {get;set;}
+	 	
 	 	 public decimal Telefono {get;set;}
 	
  	 public proveedor(){}

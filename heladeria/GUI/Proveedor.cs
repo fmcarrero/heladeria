@@ -8,10 +8,16 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace heladeria.GUI
+
 {
     public partial class Proveedor : Form
     {
-       
+        private addProveedor mOpener2 = new addProveedor();
+        public addProveedor Opener
+        {
+            set { this.mOpener2 = value; }
+        }
+
 
         public Proveedor()
         {
@@ -220,6 +226,26 @@ namespace heladeria.GUI
             if (e.KeyCode == Keys.Delete)
             {
                 function(var);
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+
+                if (this.mOpener2 != null)
+                {
+                    this.mOpener2.sendData(var);
+                    // addUser addUSER = new addUser();
+
+                    mOpener2.ShowDialog();
+
+
+                }
+                else
+                {
+                    MessageBox.Show("pailas");
+                }
+
+
+
             }
         }
 

@@ -22,8 +22,8 @@ namespace heladeria.GUI.usuarios
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             CenterToScreen();
-           backend.refactory r = new backend.refactory();
-          r.prueba1();
+          // backend.refactory r = new backend.refactory();
+          //r.prueba1();
 
             
         }

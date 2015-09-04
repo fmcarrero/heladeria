@@ -11,9 +11,11 @@ namespace heladeria.GUI
 {
     public partial class addProveedor : Form
     {
+        public static String com1 = "";
         public addProveedor()
         {
             InitializeComponent();
+            
             backend.leerXml le = new backend.leerXml();
             String var = le.leer("nombre");
             label2.Text = var;
@@ -31,6 +33,24 @@ namespace heladeria.GUI
             this.panel6.BackColor = Color.LightBlue;
             comboBox1.DataSource = backend.proveedores_back.llenar_combo_categoria();
             
+        }
+        public void sendData(String data)
+        {
+            backend.VO.proveedor proveedorOb = backend.proveedores_back.updateProveedor(data);
+           
+            textBox1.Text = proveedorOb.Nit;
+            textBox2.Text = proveedorOb.Nombre;
+            textBox3.Text = Convert.ToString( proveedorOb.Telefono);
+            textBox4.Text= Convert.ToString(proveedorOb.Celular);
+            textBox5.Text = Convert.ToString(proveedorOb.Fax);
+            richTextBox1.Text = proveedorOb.Descripcion;
+            textBox6.Text = proveedorOb.Direccion;
+            textBox7.Text = proveedorOb.Correo;
+            comboBox1.Text = proveedorOb.Codigo;
+            com1 = "yes";
+            this.Text = "Modificar proveedor";
+            
+
         }
         private void richTextBox1_GotFocus(object sender, EventArgs e)
         {
@@ -123,19 +143,32 @@ namespace heladeria.GUI
 
         private void pictureBox8_Click(object sender, EventArgs e)
         {
-
-            DialogResult result = MessageBox.Show("desea agregar al proveedor " + textBox2.Text, "Agregar", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            String mensaje = "";
+            String mensaje2 = "";
+            if (com1.Equals("yes")) {
+                mensaje = "desea modificar al proveedor ";
+                mensaje2 = "Modificar";
+            }
+            else{
+                mensaje = "desea agregar al proveedor ";
+                mensaje2 = "Agregar";
+            }
+            DialogResult result = MessageBox.Show(mensaje + textBox2.Text, mensaje2, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             try {
                 if (result == DialogResult.Yes)
                 {
                     //code for Yes
 
                     backend.VO.proveedor objeProveedor = new backend.VO.proveedor(Convert.ToDecimal(textBox4.Text), backend.proveedores_back.obtenerCodigoCatProveedor(comboBox1.Text), textBox7.Text, richTextBox1.Text, textBox6.Text, Convert.ToInt16(textBox5.Text), textBox1.Text, textBox2.Text, Convert.ToInt32(textBox3.Text));
-                    int resul = backend.proveedores_back.agregarProveedor(objeProveedor, "no");
+                    int resul = backend.proveedores_back.agregarProveedor(objeProveedor, com1);
                     if (resul > 0)
                     {
                         MessageBox.Show("guardado correctamente");
-                        pictureBox7_Click(sender,e);
+                       if (!com1.Equals("yes")) {
+                            pictureBox7_Click(sender, e);
+                        }
+                        com1 = "no";
+                       
 
                     }
                     else {
@@ -154,7 +187,7 @@ namespace heladeria.GUI
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show("ocurrieron errores durante el proceso");
+                MessageBox.Show("ocurrieron errores durante el proceso"+ex.ToString());
             }
         }
 

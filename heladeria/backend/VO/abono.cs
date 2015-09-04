@@ -10,8 +10,7 @@ using System;
 	 	 public DateTime Fecha {get;set;}
 	 	 public String Hora {get;set;}
 	 	 public String Usuario {get;set;}
-	 	 public decimal Valor {get;set;
-        }
+	 	 public decimal Valor {get;set;}
 	
  	 public abono(){}
  	 public abono (String codigo,decimal documento_identidad,DateTime fecha,String hora,String usuario,decimal valor) { 
